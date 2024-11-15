@@ -23,6 +23,7 @@ public class Main {
                 + "      \"e\": \"AQAB\"\n"
                 + "}"
         );
+        System.err.println("Supported RSA: " + rsaParser.isKeyTypeSupported("RSA"));
         System.err.println(rsaParser.toPublicKey());
         JWK rsa = JWKBuilder.create()
                 .kid(rsaParser.getJwk().getKeyId())
@@ -31,11 +32,12 @@ public class Main {
         System.err.println(JsonSerialization.writeValueAsString(rsa));
     }
 
-    private static void testEcEC() throws Exception {
+    private static void testEdEC() throws Exception {
         JWKParser ecdcParser = JWKParser.create().parse(
                 "{\"kty\":\"OKP\",\"crv\":\"Ed25519\",\n"
                 + "   \"d\":\"nWGxne_9WmC6hEr0kuwsxERJxWl7MmkZcDusAxyuf2A\",\n"
                 + "   \"x\":\"11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo\"}");
+        System.err.println("Supported OKP: " + ecdcParser.isKeyTypeSupported("OKP"));
         System.err.println(ecdcParser.toPublicKey());
         JWK eced = JWKBuilder.create()
                 .kid(ecdcParser.getJwk().getKeyId())
@@ -46,6 +48,6 @@ public class Main {
 
     public static void main(String... args) throws Exception {
         testRsa();
-        testEcEC();
+        testEdEC();
     }
 }
